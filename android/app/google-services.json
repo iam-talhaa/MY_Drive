@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "941938625190",
+    "project_id": "mydrive-7020b",
+    "storage_bucket": "mydrive-7020b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941938625190:android:ff9c733bd3e3662bc10267",
+        "android_client_info": {
+          "package_name": "com.example.mydrive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY75A1DD9kAUlUz3PBqXr_Nql0w-uh7SA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
