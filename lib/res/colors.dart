@@ -11,3 +11,6 @@ Color accentBlue = const Color(
 Color lightGreen = const Color(0xFFA0E00D); // Optional success/active tag
 Color accentYellow = const Color(0xFFFFE600); // Highlight, alerts, promo badge
 Color accentRed = const Color(0xFFA0210D); // Errors, warnings, danger state
+Color lightGreenLight = const Color(
+  0xFFB0FC38,
+); // Light green for success messages
