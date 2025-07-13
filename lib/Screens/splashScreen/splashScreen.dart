@@ -14,7 +14,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-   // Splashservices().Login(context);
+   Splashservices().Login(context);
   }
 
   @override

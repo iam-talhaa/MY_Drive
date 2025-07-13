@@ -128,65 +128,62 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 110,
-                margin: const EdgeInsets.symmetric(vertical: 12),
-                padding: const EdgeInsets.only(left: 12),
-                decoration: BoxDecoration(
-                  color: const Color(
-                    0xFFEAFBF2,
-                  ), // light pastel green background
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: myimages.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        right: 12,
-                        top: 10,
-                        bottom: 10,
+              GestureDetector(
+                child: Container(
+                  height: 110,
+                  margin: const EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.only(left: 12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEAFBF2),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
                       ),
-                      child: Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: const Color(0xFF1BAF6C),
-                            width: 1.5,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.green.withOpacity(0.2),
-                              blurRadius: 6,
-                              offset: const Offset(0, 4),
+                    ],
+                  ),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: myimages.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          right: 12,
+                          top: 10,
+                          bottom: 10,
+                        ),
+                        child: Container(
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: const Color(0xFF1BAF6C),
+                              width: 1.5,
                             ),
-                          ],
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.green.withOpacity(0.2),
+                                blurRadius: 6,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(14),
+                            child: myimages[index],
+                          ),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
-                          child:
-                              myimages[index], // e.g., Image.asset(...) or Icon(...)
-                        ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
-
               Text(
                 "Where to go?",
                 style: TextStyle(
-                  // fontFamily: 'SeymourOne',
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                   color: Colors.black87,
@@ -194,19 +191,10 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
               ),
               const SizedBox(height: 20),
 
-              // Origin
-              DropdownButtonFormField<String>(
-                value:
-                    _origin != null
-                        ? places.entries
-                            .firstWhere(
-                              (e) => e.value == _origin!,
-                              orElse:
-                                  () =>
-                                      MapEntry('Select Location', LatLng(0, 0)),
-                            )
-                            .key
-                        : 'Select Location',
+              // Origin (Read-only)
+              TextFormField(
+                readOnly: true,
+                initialValue: 'Current Location',
                 decoration: InputDecoration(
                   labelText: 'Origin',
                   prefixIcon: Icon(Icons.my_location, color: primaryGreen),
@@ -217,27 +205,10 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                items:
-                    places.entries.map((entry) {
-                      return DropdownMenuItem<String>(
-                        value: entry.key,
-                        child: Text(entry.key),
-                      );
-                    }).toList(),
-                onChanged: (value) {
-                  if (value != null && value != 'Select Location') {
-                    setState(() {
-                      _origin = places[value];
-                      _updateDistance();
-                      _centerMapToBounds();
-                    });
-                  }
-                },
               ),
-
               const SizedBox(height: 12),
 
-              // Destination
+              // Destination Dropdown
               DropdownButtonFormField<String>(
                 value:
                     _destination != null
@@ -277,7 +248,6 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                   }
                 },
               ),
-
               const SizedBox(height: 20),
 
               if (_distanceInKm != null)
@@ -313,14 +283,9 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
-        ),
-        title: Text(
-          "MyDrive - Peshawar",
-          style: TextStyle(fontFamily: 'SeymourOne-Regular'),
-        ),
-        backgroundColor: lightGreen,
+        leading: Icon(Icons.route),
+        title: Text("MyDrive", style: TextStyle(fontFamily: 'SeymourOne')),
+        backgroundColor: lightGreen2,
         centerTitle: true,
         elevation: 1,
       ),
@@ -332,6 +297,13 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                 options: MapOptions(
                   initialCenter: _currentPosition!,
                   initialZoom: 13.0,
+                  onLongPress: (tapPos, latlng) {
+                    setState(() {
+                      _destination = latlng;
+                      _updateDistance();
+                      _centerMapToBounds();
+                    });
+                  },
                 ),
                 children: [
                   TileLayer(
@@ -357,8 +329,8 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                           point: _destination!,
                           width: 40,
                           height: 40,
-                          child: Image(
-                            image: AssetImage('assets/pin.png'),
+                          child: Image.asset(
+                            'assets/pin.png',
                             width: 40,
                             height: 40,
                           ),
@@ -369,11 +341,11 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
               ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: showRouteBottomSheet,
-        backgroundColor: const Color(0xFF4CAF50), // Elegant emerald green
+        backgroundColor: const Color(0xFF4CAF50),
         foregroundColor: Colors.white,
         icon: const Icon(Icons.alt_route_rounded, size: 28),
         label: const Text(
-          "Select Route @",
+          "Select Route ",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.0,

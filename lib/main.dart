@@ -22,7 +22,7 @@ class _MyDriveAppState extends State<MyDriveApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LiveLocationMap(),
+      home: Splashscreen(),
     );
   }
 }
