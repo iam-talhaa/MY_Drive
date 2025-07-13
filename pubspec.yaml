@@ -83,6 +83,9 @@ flutter:
     - assets/carpng.png
     - assets/pin.png
     - assets/location.json
+    - assets/delivery2.png
+    - assets/motercycle2.png
+    - assets/cab.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

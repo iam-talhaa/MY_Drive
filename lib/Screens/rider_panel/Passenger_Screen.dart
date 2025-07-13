@@ -32,6 +32,13 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
     'Ring Road': LatLng(33.9804, 71.5003),
   };
 
+  List<Image> myimages = [
+    Image.asset('assets/cab.png'),
+    Image.asset('assets/motercycle2.png'),
+    Image.asset('assets/delivery2.png'),
+    Image.asset('assets/Bike.png'),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -121,6 +128,61 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Container(
+                height: 110,
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.only(left: 12),
+                decoration: BoxDecoration(
+                  color: const Color(
+                    0xFFEAFBF2,
+                  ), // light pastel green background
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: myimages.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        right: 12,
+                        top: 10,
+                        bottom: 10,
+                      ),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: const Color(0xFF1BAF6C),
+                            width: 1.5,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.green.withOpacity(0.2),
+                              blurRadius: 6,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child:
+                              myimages[index], // e.g., Image.asset(...) or Icon(...)
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
               Text(
                 "Where to go?",
                 style: TextStyle(
@@ -224,16 +286,14 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                     Text(
                       "Distance: ${_distanceInKm!.toStringAsFixed(2)} km",
                       style: TextStyle(
-                        fontFamily: 'SeymourOne',
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 5),
                     Text(
                       "Estimated Fare: Rs. ${(100 + (_distanceInKm! * 25)).toInt()}",
                       style: TextStyle(
-                        fontFamily: 'SeymourOne',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: primaryGreen,

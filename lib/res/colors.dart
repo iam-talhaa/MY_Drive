@@ -32,3 +32,7 @@ const Color softGrey = Color(0xFFB0BEC5);
 const Color primaryGreen2 = Color(0xFF00C853); // Main InDrive green
 const Color greenBackground = Color(0xFFE8F5E9); // Soft mint background
 const Color greenText = Color(0xFF2E7D32); // Deep green for text
+const Color primaryGreen1 = Color(0xFF02C697); // Main green
+const Color primaryGreen21 = Color(0xFF00A982); // Lighter green glow
+const Color greenBackground1 = Color(0xFFE6F4F1); // Optional background
+const Color greenText1 = Color(0xFF006C5F);         // Text accent
