@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mydrive/Screens/Auth/LoginScreenWidget.dart';
-import 'package:mydrive/Screens/Auth/signUpScreen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mydrive/Screens/driverAndRider/driverAndRider.dart';
 import 'package:mydrive/res/colors.dart';
+import 'package:mydrive/utils/utils.dart';
 import 'package:mydrive/widgets/custom_Button.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -16,34 +18,53 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController S_emailController = TextEditingController();
   TextEditingController S_passwordController = TextEditingController();
+  TextEditingController S_nameController = TextEditingController();
+
   bool isLoginScreen = true;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  // Future<User?> signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignIn googleSignIn = GoogleSignIn();
+  //     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+  //     if (googleUser == null) return null;
+
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     UserCredential userCredential =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+
+  //     return userCredential.user;
+  //   } catch (e) {
+  //     print("Google Sign-In error: $e");
+  //     return null;
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    final Screen_Height = MediaQuery.of(context).size.height * 1;
-    final Screen_Width = MediaQuery.of(context).size.width * 1;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15.0,
-              vertical: 20.0,
-            ),
+          Expanded(
             child: Container(
               width: double.infinity,
-              height: Screen_Height / 1.07,
+              margin: EdgeInsets.all(15),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [lightGreen.withOpacity(0.9), Colors.greenAccent],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                  bottomLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                ),
+                borderRadius: BorderRadius.circular(32),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.green.withOpacity(0.3),
@@ -54,301 +75,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child:
-                    isLoginScreen
-                        ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 150,
-                              width: 150,
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                // borderRadius: BorderRadius.circular(16),
-                                // border: Border.all(color: Colors.green, width: 2),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 8,
-                                    offset: Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.asset(
-                                  'assets/tire.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: TextFormField(
-                                controller: emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter your Email',
-                                  icon: Icon(Icons.person),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                right: 16,
-                                left: 16,
-                                top: 8,
-                                bottom: 0,
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: TextFormField(
-                                obscureText: true,
-                                controller: passwordController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter your Password',
-                                  icon: Icon(Icons.email),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Dont have an account?'),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isLoginScreen = false;
-                                      });
-                                    },
-                                    child: Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                        color: accentBlue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 30),
-                            Custom_button(
-                              name: "Login",
-                              B_color: lightGreen.withOpacity(0.9),
-                              ontap: () {},
-                              b_Width: 200.0,
-                              b_height: 45.0,
-                              textcolor: whiteBackground,
-                            ),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    // Handle Google Sign In
-                                  },
-                                  child: Image(
-                                    height: 40,
-                                    image: AssetImage('assets/Google.png'),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Image(
-                                  height: 40,
-                                  image: AssetImage('assets/Facebook.png'),
-                                ),
-                                SizedBox(width: 10),
-
-                                Image(
-                                  height: 40,
-                                  image: AssetImage('assets/linkedin.png'),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                        : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 150,
-                              width: 150,
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                // borderRadius: BorderRadius.circular(16),
-                                // border: Border.all(color: Colors.green, width: 2),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 8,
-                                    offset: Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.asset(
-                                  'assets/tire.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: TextFormField(
-                                controller: S_emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter your Name',
-                                  icon: Icon(Icons.person),
-                                ),
-                              ),
-                            ),
-
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: TextFormField(
-                                controller: S_emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter your Email',
-                                  icon: Icon(Icons.person),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                right: 16,
-                                left: 16,
-                                top: 8,
-                                bottom: 0,
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: TextFormField(
-                                obscureText: true,
-                                controller: S_passwordController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter your Password',
-                                  icon: Icon(Icons.email),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Already have an account?'),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isLoginScreen = true;
-                                      });
-                                    },
-                                    child: Text(
-                                      'Log in',
-                                      style: TextStyle(
-                                        color: accentBlue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 30),
-                            Custom_button(
-                              name: "Sign Up",
-                              B_color: lightGreen.withOpacity(0.9),
-                              ontap: () {},
-                              b_Width: 200.0,
-                              b_height: 45.0,
-                              textcolor: whiteBackground,
-                            ),
-                            SizedBox(height: 20),
-                          ],
-                        ),
+                child: isLoginScreen ? buildLoginUI() : buildSignupUI(),
               ),
             ),
           ),
@@ -356,4 +83,205 @@ class _AuthScreenState extends State<AuthScreen> {
       ),
     );
   }
+
+  Widget buildLoginUI() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildLogo(),
+        buildTextField(emailController, 'Enter your Email', Icons.person),
+        buildTextField(
+          passwordController,
+          'Enter your Password',
+          Icons.lock,
+          isPassword: true,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Don’t have an account?'),
+            TextButton(
+              onPressed: () => setState(() => isLoginScreen = false),
+              child: Text(
+                'Sign Up',
+                style: TextStyle(
+                  color: accentBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Custom_button(
+          name: "Login",
+          B_color: lightGreen.withOpacity(0.9),
+          ontap: () {
+            auth
+                .signInWithEmailAndPassword(
+                  email: emailController.text.trim(),
+                  password: passwordController.text.trim(),
+                )
+                .then((value) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => DriverAndRider()),
+                  );
+                  UTils().Toastmsg("User Logged In Successfully", Colors.green);
+                })
+                .catchError((error) {
+                  UTils().Toastmsg("Error: $error", Colors.red);
+                });
+          },
+          b_Width: 200.0,
+          b_height: 45.0,
+          textcolor: whiteBackground,
+        ),
+        SizedBox(height: 20),
+        buildSocialButtons(),
+      ],
+    );
+  }
+
+  Widget buildSignupUI() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildLogo(),
+        buildTextField(S_nameController, 'Enter your Name', Icons.person),
+        buildTextField(S_emailController, 'Enter your Email', Icons.email),
+        buildTextField(
+          S_passwordController,
+          'Enter your Password',
+          Icons.lock,
+          isPassword: true,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Already have an account?'),
+            TextButton(
+              onPressed: () => setState(() => isLoginScreen = true),
+              child: Text(
+                'Log in',
+                style: TextStyle(
+                  color: accentBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Custom_button(
+          name: "Sign Up",
+          B_color: lightGreen.withOpacity(0.9),
+          ontap: () {
+            auth
+                .createUserWithEmailAndPassword(
+                  email: S_emailController.text.trim(),
+                  password: S_passwordController.text.trim(),
+                )
+                .then((value) {
+                  UTils().Toastmsg("User Created Successfully", Colors.green);
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => AuthScreen()),
+                  );
+                  setState(() {
+                    isLoginScreen = true;
+                  });
+                })
+                .catchError((error) {
+                  UTils().Toastmsg("Error: $error", Colors.red);
+                });
+          },
+          b_Width: 200.0,
+          b_height: 45.0,
+          textcolor: whiteBackground,
+        ),
+      ],
+    );
+  }
+
+  Widget buildLogo() {
+    return Container(
+      height: 150,
+      width: 150,
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(75),
+        child: Image.asset('assets/tire.png', fit: BoxFit.cover),
+      ),
+    );
+  }
+
+  Widget buildTextField(
+    TextEditingController controller,
+    String hintText,
+    IconData icon, {
+    bool isPassword = false,
+  }) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2)),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hintText,
+          icon: Icon(icon),
+        ),
+        keyboardType: TextInputType.emailAddress,
+      ),
+    );
+  }
+
+  Widget buildSocialButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () async {},
+          child: Image.asset('assets/Google.png', height: 40),
+        ),
+        SizedBox(width: 10),
+        Image.asset('assets/Facebook.png', height: 40),
+        SizedBox(width: 10),
+        Image.asset('assets/linkedin.png', height: 40),
+      ],
+    );
+  }
+
+  // Future<User?> signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignIn googleSignIn = GoogleSignIn();
+  //     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+  //     if (googleUser == null) return null; // User canceled
+
+  //     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+  //     final AuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     final UserCredential userCredential =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+
+  //     return userCredential.user;
+  //   } catch (e) {
+  //     print('Google Sign-In Error: $e');
+  //     return null;
+  //   }
+  // }
 }

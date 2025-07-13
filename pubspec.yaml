@@ -40,6 +40,9 @@ dependencies:
   latlong2: ^0.9.1
   geolocator: ^14.0.2
   flutter_map_dragmarker: ^8.0.3
+  fluttertoast: ^8.2.12
+  google_sign_in: ^7.1.0
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +80,9 @@ flutter:
     - assets/login.png
     - assets/linkedin.png
     - assets/passenger.png
+    - assets/carpng.png
+    - assets/pin.png
+    - assets/location.json
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

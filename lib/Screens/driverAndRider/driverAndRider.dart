@@ -17,12 +17,7 @@ class _DriverAndRiderState extends State<DriverAndRider> {
       backgroundColor: lightGreenLight,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            top: 60,
-            right: 20,
-            bottom: 30,
-          ),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,7 +39,7 @@ class _DriverAndRiderState extends State<DriverAndRider> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 8),
+
               Text(
                 "Who Are You Today?",
                 style: TextStyle(
@@ -53,11 +48,10 @@ class _DriverAndRiderState extends State<DriverAndRider> {
                   color: Colors.grey[800],
                 ),
               ),
-              SizedBox(height: 24),
 
               // DRIVER Card
               buildOptionCard(
-                imagePath: 'assets/car.png',
+                imagePath: 'assets/carpng.png',
                 buttonText: "DRIVER",
                 onTap: () {
                   // Navigate or do something
@@ -93,12 +87,13 @@ class _DriverAndRiderState extends State<DriverAndRider> {
     required VoidCallback onTap,
   }) {
     return Container(
-      height: 220,
+      height: 240,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+
+      padding: EdgeInsets.symmetric(vertical: 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [whiteBackground, Colors.grey[100]!],
+          colors: [whiteBackground, lightGreen2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -112,20 +107,26 @@ class _DriverAndRiderState extends State<DriverAndRider> {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Hero(
-            tag: imagePath,
-            child: Image.asset(imagePath, height: 120, fit: BoxFit.contain),
+          Center(
+            child: Hero(
+              tag: imagePath,
+              child: Image.asset(imagePath, height: 195, fit: BoxFit.contain),
+            ),
           ),
-          SizedBox(height: 16),
-          Custom_button(
-            name: buttonText,
-            B_color: lightGreen,
-            ontap: onTap,
-            b_Width: double.infinity,
-            b_height: 45.0,
-            textcolor: whiteBackground,
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Custom_button(
+              name: buttonText,
+              B_color: darkGreen.withOpacity(0.8),
+              ontap: onTap,
+              b_Width: double.infinity,
+              b_height: 40.0,
+              textcolor: whiteBackground,
+            ),
           ),
         ],
       ),
