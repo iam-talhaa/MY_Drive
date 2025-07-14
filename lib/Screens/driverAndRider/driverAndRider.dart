@@ -12,12 +12,21 @@ class DriverAndRider extends StatefulWidget {
 
 class _DriverAndRiderState extends State<DriverAndRider> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // ✅ Precache images here to avoid MediaQuery error
+    precacheImage(const AssetImage('assets/carpng.png'), context);
+    precacheImage(const AssetImage('assets/passenger.png'), context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: lightGreenLight,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: lightGreenLight,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,7 +48,7 @@ class _DriverAndRiderState extends State<DriverAndRider> {
                   color: Colors.black,
                 ),
               ),
-
+              const SizedBox(height: 5),
               Text(
                 "Who Are You Today?",
                 style: TextStyle(
@@ -49,23 +58,24 @@ class _DriverAndRiderState extends State<DriverAndRider> {
                 ),
               ),
 
+              const SizedBox(height: 28),
+
               // DRIVER Card
               buildOptionCard(
                 imagePath: 'assets/carpng.png',
                 buttonText: "DRIVER",
                 onTap: () {
-                  // Navigate or do something
+                  // TODO: Navigate to driver screen
                 },
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 15),
 
               // PASSENGER Card
               buildOptionCard(
                 imagePath: 'assets/passenger.png',
                 buttonText: "PASSENGER",
                 onTap: () {
-                  // Navigate or do somethingn
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (BuildContext context) => LiveLocationMap(),
@@ -80,17 +90,15 @@ class _DriverAndRiderState extends State<DriverAndRider> {
     );
   }
 
-  // Reusable Styled Card
+  // 🔁 Reusable Option Card
   Widget buildOptionCard({
     required String imagePath,
     required String buttonText,
     required VoidCallback onTap,
   }) {
     return Container(
-      height: 240,
+      height: 220,
       width: double.infinity,
-
-      padding: EdgeInsets.symmetric(vertical: 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [whiteBackground, lightGreen2],
@@ -107,18 +115,21 @@ class _DriverAndRiderState extends State<DriverAndRider> {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Center(
+          const SizedBox(height: 8),
+          Expanded(
             child: Hero(
               tag: imagePath,
-              child: Image.asset(imagePath, height: 195, fit: BoxFit.contain),
+              child: Image.asset(
+                imagePath,
+                height: 195,
+                fit: BoxFit.contain,
+                gaplessPlayback: true,
+              ),
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.only(bottom: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Custom_button(
               name: buttonText,
               B_color: darkGreen.withOpacity(0.8),

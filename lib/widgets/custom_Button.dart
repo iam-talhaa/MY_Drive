@@ -28,21 +28,37 @@ class _Custom_buttonState extends State<Custom_button> {
     return GestureDetector(
       onTap: widget.ontap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
           height: widget.b_height,
           width: widget.b_Width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: widget.B_color,
+            gradient: LinearGradient(
+              colors: [
+                widget.B_color.withOpacity(0.9),
+                widget.B_color.withOpacity(0.7),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: widget.B_color.withOpacity(0.4),
+                offset: const Offset(0, 4),
+                blurRadius: 8,
+              ),
+            ],
           ),
           child: Center(
             child: Text(
               widget.name,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: widget.textcolor,
+                letterSpacing: 1,
               ),
             ),
           ),

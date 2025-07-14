@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mydrive/Screens/Auth/AuthScreen.dart';
+import 'package:mydrive/Screens/driverAndRider/driverAndRider.dart';
 import 'package:mydrive/Screens/rider_panel/Passenger_Screen.dart';
 import 'package:mydrive/Screens/splashScreen/splashScreen.dart';
 import 'package:mydrive/firebase_options.dart';
@@ -22,7 +24,7 @@ class _MyDriveAppState extends State<MyDriveApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splashscreen(),
+      home: LiveLocationMap(),
     );
   }
 }

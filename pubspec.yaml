@@ -103,6 +103,10 @@ flutter:
     - family: SeymourOne
       fonts:
         - asset: assets/Fonts/SeymourOne-Regular.ttf
+
+    - family: Pacifico
+      fonts:
+        - asset: assets/Fonts/Pacifico-Regular.ttf
         
        
           

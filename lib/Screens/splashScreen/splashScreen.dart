@@ -14,7 +14,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-   Splashservices().Login(context);
+    Splashservices().Login(context);
   }
 
   @override
@@ -26,9 +26,9 @@ class _SplashscreenState extends State<Splashscreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFEEEEEE), // Light Grey
-              Color(0xFFDADADA), // Slightly Darker Grey
-              Color(0xFFCFCFCF), // Medium Grey
+              Color(0xFFE0F7E9), // Light Mint Green
+              Color(0xFFB2F1C2), // Soft Pastel Green
+              Color(0xFF81E6B0), // Emerald Hint
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -74,20 +74,26 @@ class _SplashscreenState extends State<Splashscreen> {
                   style: TextStyle(
                     fontSize: 38,
                     fontWeight: FontWeight.bold,
-                    color: primaryGreen,
+                    color: Colors.blueGrey[900],
                     letterSpacing: 1.2,
-                    fontFamily: 'SeymourOne', // Make sure this font exists
+                    fontFamily: 'SeymourOne', // Make sure this font is added
                     shadows: [
                       Shadow(
                         blurRadius: 6,
                         color: primaryGreen2.withOpacity(0.6),
                         offset: const Offset(0, 3),
-                      )
+                      ),
                     ],
                   ),
                 ),
+                Divider(
+                  color: primaryGreen2,
+                  thickness: 2,
+                  indent: 60,
+                  endIndent: 60,
+                ),
 
-                const SizedBox(height: 12),
+                const SizedBox(height: 7),
 
                 // Tagline
                 Text(

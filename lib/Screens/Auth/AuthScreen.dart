@@ -52,34 +52,36 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [lightGreen.withOpacity(0.9), Colors.greenAccent],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(32),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: Offset(0, 5),
+      body: Expanded(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                //  margin: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [lightGreen.withOpacity(0.9), Colors.greenAccent],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: isLoginScreen ? buildLoginUI() : buildSignupUI(),
+                  // borderRadius: BorderRadius.circular(32),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.green.withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: isLoginScreen ? buildLoginUI() : buildSignupUI(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -125,7 +127,10 @@ class _AuthScreenState extends State<AuthScreen> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (_) => DriverAndRider()),
                   );
-                  UTils().Toastmsg("User Logged In Successfully", Colors.green);
+                  UTils().Toastmsg(
+                    "SignUp Successfully",
+                    Colors.lightBlueAccent,
+                  );
                 })
                 .catchError((error) {
                   UTils().Toastmsg("Error: $error", Colors.red);
