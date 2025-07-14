@@ -39,7 +39,6 @@ class _SplashscreenState extends State<Splashscreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Glowing circle behind Lottie
                 Container(
                   height: 240,
                   width: 240,

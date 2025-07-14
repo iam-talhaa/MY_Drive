@@ -65,7 +65,7 @@ class _DriverAndRiderState extends State<DriverAndRider> {
                 imagePath: 'assets/carpng.png',
                 buttonText: "DRIVER",
                 onTap: () {
-                  // TODO: Navigate to driver screen
+                  
                 },
               ),
 

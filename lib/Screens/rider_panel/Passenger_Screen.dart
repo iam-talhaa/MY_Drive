@@ -190,32 +190,44 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                     scrollDirection: Axis.horizontal,
                     itemCount: myimages.length,
                     itemBuilder: (context, index) {
+                      bool isSelected = false;
                       return Padding(
                         padding: const EdgeInsets.only(
                           right: 12,
                           top: 10,
                           bottom: 10,
                         ),
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: const Color(0xFF1BAF6C),
-                              width: 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.green.withOpacity(0.2),
-                                blurRadius: 6,
-                                offset: const Offset(0, 4),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isSelected = !isSelected;
+                              print(isSelected);
+                            });
+                          },
+                          child: Container(
+                            width: 90,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color:
+                                    isSelected == true
+                                        ? Colors.indigo
+                                        : Color(0xFF1BAF6C),
+                                width: 1.5,
                               ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: myimages[index],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.green.withOpacity(0.2),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: myimages[index],
+                            ),
                           ),
                         ),
                       );
@@ -299,15 +311,20 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                 Column(
                   children: [
                     Container(
-                      height: 120,
+                      height: 125,
                       width: double.infinity,
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
+                        border: Border.all(color: greenText, width: 1.0),
                         gradient: LinearGradient(
-                          colors: [lightGreen2, lightGreen.withOpacity(0.8)],
+                          colors: [
+                            Color(0xFFC2FFD8), // Pastel Green
+                            Color(0xFFB5FFFF), // Pastel Cyan
+                            Color(0xFFEFFFFD), // Very Light Aqua],
+                          ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -393,82 +410,126 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: Icon(Icons.route),
-        title: Text("MyDrive", style: TextStyle(fontFamily: 'SeymourOne')),
-        backgroundColor: lightGreen2,
-        centerTitle: true,
-        elevation: 1,
-      ),
-      body:
-          _currentPosition == null
-              ? Center(child: CircularProgressIndicator(color: primaryGreen))
-              : FlutterMap(
-                mapController: mapController,
-                options: MapOptions(
-                  initialCenter: _currentPosition!,
-                  initialZoom: 13.0,
-                  onLongPress: (tapPos, latlng) {
-                    setState(() {
-                      _destination = latlng;
-                      _updateDistance();
-                      _centerMapToBounds();
-                    });
-                  },
-                ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        "https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=2KHq3M6I8owtjbj2V8Mr",
-                    userAgentPackageName: 'com.example.mydrive',
-                  ),
-                  MarkerLayer(
-                    markers: [
-                      if (_origin != null)
-                        Marker(
-                          point: _origin!,
-                          width: 40,
-                          height: 40,
-                          child: Icon(
-                            Icons.location_on,
-                            color: primaryGreen,
-                            size: 32,
-                          ),
-                        ),
-                      if (_destination != null)
-                        Marker(
-                          point: _destination!,
-                          width: 40,
-                          height: 40,
-                          child: Image.asset(
-                            'assets/pin.png',
-                            width: 40,
-                            height: 40,
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: AppBar(
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Image(image: AssetImage('assets/tire.png')),
+            ),
+            title: Text(
+              "My_Drive",
+              style: const TextStyle(
+                fontFamily: 'LuckiestGuy',
+                // fontWeight: FontWeight.bold,
+                fontSize: 25,
+                letterSpacing: 1,
+                color: darkGreen,
               ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: showRouteBottomSheet,
-        backgroundColor: const Color(0xFF4CAF50),
-        foregroundColor: Colors.white,
-        icon: const Icon(Icons.alt_route_rounded, size: 28),
-        label: const Text(
-          "Select Route ",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontSize: 16,
+            ),
+            centerTitle: true,
+            elevation: 6,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+            ),
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFC2FFD8), // Pastel Green
+                    Color(0xFFB5FFFF), // Pastel Cyan
+                    Color(0xFFEFFFFD), // Very Light Aqua],
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(20),
+                ),
+              ),
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.account_circle, color: darkGreen),
+                onPressed: () {
+                  // Profile action
+                },
+              ),
+            ],
           ),
         ),
-        elevation: 8,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: Colors.white, width: 1.5),
+
+        body:
+            _currentPosition == null
+                ? Center(child: CircularProgressIndicator(color: primaryGreen))
+                : FlutterMap(
+                  mapController: mapController,
+                  options: MapOptions(
+                    initialCenter: _currentPosition!,
+                    initialZoom: 13.0,
+                    onLongPress: (tapPos, latlng) {
+                      setState(() {
+                        _destination = latlng;
+                        _updateDistance();
+                        _centerMapToBounds();
+                      });
+                    },
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          "https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=2KHq3M6I8owtjbj2V8Mr",
+                      userAgentPackageName: 'com.example.mydrive',
+                    ),
+                    MarkerLayer(
+                      markers: [
+                        if (_origin != null)
+                          Marker(
+                            point: _origin!,
+                            width: 40,
+                            height: 40,
+                            child: Icon(
+                              Icons.location_on,
+                              color: primaryGreen,
+                              size: 32,
+                            ),
+                          ),
+                        if (_destination != null)
+                          Marker(
+                            point: _destination!,
+                            width: 40,
+                            height: 40,
+                            child: Image.asset(
+                              'assets/pin.png',
+                              width: 40,
+                              height: 40,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: showRouteBottomSheet,
+          backgroundColor: const Color(0xFF4CAF50),
+          foregroundColor: Colors.white,
+          icon: const Icon(Icons.alt_route_rounded, size: 28),
+          label: const Text(
+            "Select Route ",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.0,
+              fontSize: 16,
+            ),
+          ),
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: Colors.white, width: 1.5),
+          ),
         ),
       ),
     );

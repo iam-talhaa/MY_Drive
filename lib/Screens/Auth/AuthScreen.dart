@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mydrive/Screens/driverAndRider/driverAndRider.dart';
 import 'package:mydrive/res/colors.dart';
 import 'package:mydrive/utils/utils.dart';
@@ -50,158 +49,194 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final S_height = MediaQuery.of(context).size.height * 1;
+    final S_width = MediaQuery.of(context).size.width * 1;
+
     return Scaffold(
-      body: Expanded(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                //  margin: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [lightGreen.withOpacity(0.9), Colors.greenAccent],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              //  margin: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [lightGreen.withOpacity(0.9), Colors.greenAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                // borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.green.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
                   ),
-                  // borderRadius: BorderRadius.circular(32),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withOpacity(0.3),
-                      blurRadius: 10,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: isLoginScreen ? buildLoginUI() : buildSignupUI(),
-                ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: isLoginScreen ? buildLoginUI() : buildSignupUI(),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   Widget buildLoginUI() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        buildLogo(),
-        buildTextField(emailController, 'Enter your Email', Icons.person),
-        buildTextField(
-          passwordController,
-          'Enter your Password',
-          Icons.lock,
-          isPassword: true,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Don’t have an account?'),
-            TextButton(
-              onPressed: () => setState(() => isLoginScreen = false),
-              child: Text(
-                'Sign Up',
-                style: TextStyle(
-                  color: accentBlue,
-                  fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          buildLogo(),
+          Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 24,
+              fontFamily: 'Pacifico',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Divider(
+            color: Colors.white,
+            thickness: 1.5,
+            endIndent: 100,
+            indent: 100,
+          ),
+          buildTextField(emailController, 'Enter your Email', Icons.person),
+          buildTextField(
+            passwordController,
+            'Enter your Password',
+            Icons.lock,
+            isPassword: true,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Don’t have an account?'),
+              TextButton(
+                onPressed: () => setState(() => isLoginScreen = false),
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    color: accentBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        Custom_button(
-          name: "Login",
-          B_color: lightGreen.withOpacity(0.9),
-          ontap: () {
-            auth
-                .signInWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim(),
-                )
-                .then((value) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => DriverAndRider()),
-                  );
-                  UTils().Toastmsg(
-                    "SignUp Successfully",
-                    Colors.lightBlueAccent,
-                  );
-                })
-                .catchError((error) {
-                  UTils().Toastmsg("Error: $error", Colors.red);
-                });
-          },
-          b_Width: 200.0,
-          b_height: 45.0,
-          textcolor: whiteBackground,
-        ),
-        SizedBox(height: 20),
-        buildSocialButtons(),
-      ],
+            ],
+          ),
+          Custom_button(
+            name: "Login",
+            B_color: lightGreen.withOpacity(0.9),
+            ontap: () {
+              auth
+                  .signInWithEmailAndPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  )
+                  .then((value) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => DriverAndRider()),
+                    );
+                    UTils().Toastmsg(
+                      "SignUp Successfully",
+                      Colors.lightBlueAccent,
+                    );
+                  })
+                  .catchError((error) {
+                    UTils().Toastmsg("Error: $error", Colors.red);
+                  });
+            },
+            b_Width: 200.0,
+            b_height: 45.0,
+            textcolor: whiteBackground,
+          ),
+          SizedBox(height: 20),
+          buildSocialButtons(),
+        ],
+      ),
     );
   }
 
   Widget buildSignupUI() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        buildLogo(),
-        buildTextField(S_nameController, 'Enter your Name', Icons.person),
-        buildTextField(S_emailController, 'Enter your Email', Icons.email),
-        buildTextField(
-          S_passwordController,
-          'Enter your Password',
-          Icons.lock,
-          isPassword: true,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Already have an account?'),
-            TextButton(
-              onPressed: () => setState(() => isLoginScreen = true),
-              child: Text(
-                'Log in',
-                style: TextStyle(
-                  color: accentBlue,
-                  fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+
+          buildLogo(),
+          Text(
+            'Sign Up',
+            style: TextStyle(
+              fontSize: 24,
+              fontFamily: 'Pacifico',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Divider(
+            color: Colors.white,
+            thickness: 1.5,
+            endIndent: 100,
+            indent: 100,
+          ),
+
+          buildTextField(S_nameController, 'Enter your Name', Icons.person),
+          buildTextField(S_emailController, 'Enter your Email', Icons.email),
+          buildTextField(
+            S_passwordController,
+            'Enter your Password',
+            Icons.lock,
+            isPassword: true,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Already have an account?'),
+              TextButton(
+                onPressed: () => setState(() => isLoginScreen = true),
+                child: Text(
+                  'Log in',
+                  style: TextStyle(
+                    color: accentBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        Custom_button(
-          name: "Sign Up",
-          B_color: lightGreen.withOpacity(0.9),
-          ontap: () {
-            auth
-                .createUserWithEmailAndPassword(
-                  email: S_emailController.text.trim(),
-                  password: S_passwordController.text.trim(),
-                )
-                .then((value) {
-                  UTils().Toastmsg("User Created Successfully", Colors.green);
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => AuthScreen()),
-                  );
-                  setState(() {
-                    isLoginScreen = true;
+            ],
+          ),
+          Custom_button(
+            name: "Sign Up",
+            B_color: lightGreen.withOpacity(0.9),
+            ontap: () {
+              auth
+                  .createUserWithEmailAndPassword(
+                    email: S_emailController.text.trim(),
+                    password: S_passwordController.text.trim(),
+                  )
+                  .then((value) {
+                    UTils().Toastmsg("User Created Successfully", Colors.green);
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => AuthScreen()),
+                    );
+                    setState(() {
+                      isLoginScreen = true;
+                    });
+                  })
+                  .catchError((error) {
+                    UTils().Toastmsg("Error: $error", Colors.red);
                   });
-                })
-                .catchError((error) {
-                  UTils().Toastmsg("Error: $error", Colors.red);
-                });
-          },
-          b_Width: 200.0,
-          b_height: 45.0,
-          textcolor: whiteBackground,
-        ),
-      ],
+            },
+            b_Width: 200.0,
+            b_height: 45.0,
+            textcolor: whiteBackground,
+          ),
+        ],
+      ),
     );
   }
 

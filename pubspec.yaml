@@ -107,6 +107,18 @@ flutter:
     - family: Pacifico
       fonts:
         - asset: assets/Fonts/Pacifico-Regular.ttf
+
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/Fonts/PlayfairDisplay-VariableFont_wght.ttf
+
+    - family: Anton-Regular
+      fonts:
+        - asset: assets/Fonts/Anton-Regular.ttf
+  
+    - family: LuckiestGuy
+      fonts:
+        - asset: assets/Fonts/LuckiestGuy-Regular.ttf
         
        
           
