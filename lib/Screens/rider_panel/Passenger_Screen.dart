@@ -251,7 +251,10 @@ class _LiveLocationMapState extends State<LiveLocationMap> {
                 initialValue: 'Current Location',
                 decoration: InputDecoration(
                   labelText: 'Origin',
-                  prefixIcon: Icon(Icons.my_location, color: primaryGreen),
+                  prefixIcon: Icon(
+                    Icons.my_location_outlined,
+                    color: primaryGreen,
+                  ),
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   border: OutlineInputBorder(
