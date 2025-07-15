@@ -30,7 +30,6 @@ class _DriverAndRiderState extends State<DriverAndRider> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Title Section
               Text(
                 "Two Roads",
                 style: TextStyle(
@@ -64,9 +63,7 @@ class _DriverAndRiderState extends State<DriverAndRider> {
               buildOptionCard(
                 imagePath: 'assets/carpng.png',
                 buttonText: "DRIVER",
-                onTap: () {
-                  
-                },
+                onTap: () {},
               ),
 
               const SizedBox(height: 15),
@@ -101,9 +98,9 @@ class _DriverAndRiderState extends State<DriverAndRider> {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [whiteBackground, lightGreen2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          colors: [lightGreen2, whiteBackground, lightGreen2],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
