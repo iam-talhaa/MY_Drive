@@ -90,7 +90,7 @@ class _AuthScreenState extends State<AuthScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.10),
           buildLogo(),
           Text(
             'Login',
@@ -167,7 +167,7 @@ class _AuthScreenState extends State<AuthScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.10),
 
           buildLogo(),
           Text(
