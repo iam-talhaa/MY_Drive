@@ -10,6 +10,9 @@ class DriverVerification extends StatefulWidget {
 class _DriverVerificationState extends State<DriverVerification> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Column(children: []));
+    return Scaffold(
+      appBar: AppBar(title: Text("Driver Verification")),
+      body: Column(children: []),
+    );
   }
 }
